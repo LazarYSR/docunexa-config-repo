@@ -1,2 +1,28 @@
 server:
   port: 8081
+
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/docunexa-dbS
+    username: postgres
+    password: 123456
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/docunexa
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
