@@ -20,3 +20,11 @@ spring:
             - name: Path
               args:
                 pattern: /test/**
+          filters:
+            - StripPrefix=1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
