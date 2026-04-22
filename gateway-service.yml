@@ -17,4 +17,6 @@ spring:
         - id: test-route
           uri: https://httpbin.org
           predicates:
-            - Path=/test/**
+            - name: Path
+              args:
+                pattern: /test/**
