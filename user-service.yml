@@ -20,9 +20,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9090/realms/docunexa
           jwk-set-uri: http://localhost:9090/realms/docunexa/protocol/openid-connect/certs
-
 management:
   endpoints:
     web:

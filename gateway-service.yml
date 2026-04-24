@@ -14,20 +14,10 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: test-route
-          uri: https://httpbin.org
-          predicates:
-            - name: Path
-              args:
-                pattern: /test/**
-          filters:
-            - StripPrefix=1
         - id: user-service
           uri: http://localhost:8081
           predicates:
-            - name: Path
-              args:
-                pattern: /users/**      
+            - Path=/users/**
 management:
   endpoints:
     web:
