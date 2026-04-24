@@ -6,7 +6,7 @@ spring:
     name: user-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/docunexa-dbS
+    url: jdbc:postgresql://localhost:5432/docunexa-db
     username: postgres
     password: 123456
 

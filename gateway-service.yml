@@ -22,7 +22,12 @@ spring:
                 pattern: /test/**
           filters:
             - StripPrefix=1
-
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - name: Path
+              args:
+                pattern: /users/**      
 management:
   endpoints:
     web:
