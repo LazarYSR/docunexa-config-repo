@@ -6,15 +6,16 @@ spring:
     name: auth-service
 
 keycloak:
-  server-url: http://127.0.0.1:9090
-  realm: docunexa
-  client-id: gateway-client
-  admin-client-id: admin-cli
-  admin-username: admin
-  admin-password: admin
+  server-url: ${KEYCLOAK_SERVER_URL}
+  realm: ${KEYCLOAK_REALM}
+  client-id: ${KEYCLOAK_CLIENT_ID}
+  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID}
+  admin-username: ${KEYCLOAK_ADMIN_USERNAME}
+  admin-password: ${KEYCLOAK_ADMIN_PASSWORD}
+  client-id: ${KEYCLOAK_CLIENT_ID}
 
 user-service:
-  url: http://localhost:8081
+  url: http://user-service:8081
 
 management:
   endpoints:
