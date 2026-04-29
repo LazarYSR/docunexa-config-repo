@@ -4,16 +4,14 @@ server:
 spring:
   application:
     name: gateway-service
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
   cloud:
     config:
       fail-fast: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${KEYCLOAK_SERVER_URL}/realms/${KEYCLOAK_REALM}
 
-  cloud:
     gateway:
       routes:
         - id: auth-service
@@ -25,6 +23,12 @@ spring:
           uri: http://user-service:8081
           predicates:
             - Path=/users/**
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_SERVER_URL}/realms/${KEYCLOAK_REALM}
 
 management:
   endpoints:
