@@ -4,7 +4,13 @@ server:
 spring:
   application:
     name: auth-service
-
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
 keycloak:
   server-url: ${KEYCLOAK_SERVER_URL}
   realm: ${KEYCLOAK_REALM}
