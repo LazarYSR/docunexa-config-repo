@@ -9,6 +9,8 @@ spring:
       host: localhost
       port: 8500
       discovery:
+        health-check-path: /actuator/health
+        health-check-interval: 10s
         enabled: true
         register: true
 keycloak:

@@ -4,15 +4,19 @@ server:
 spring:
   application:
     name: gateway-service
+  config:
+    import: optional:configserver:http://localhost:8888 
 
   cloud:
     config:
-      fail-fast: true
+      fail-fast: false
 
     consul:
       host: localhost
       port: 8500
       discovery:
+        health-check-path: /actuator/health
+        health-check-interval: 10s
         enabled: true
         register: true
 
