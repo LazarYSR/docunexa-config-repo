@@ -10,7 +10,7 @@ spring:
     config:
       fail-fast: false
     vault:
-      uri: http://localhost:8200
+      uri: http://localhost:8201
       token: ${VAULT_TOKEN:myroot}
       authentication: TOKEN
       kv:
