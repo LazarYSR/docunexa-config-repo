@@ -4,7 +4,18 @@ server:
 spring:
   application:
     name: auth-service
+  config:
+    import: "vault://"
   cloud:
+    vault:
+      uri: http://localhost:8200
+      token: ${VAULT_TOKEN:myroot}
+      authentication: TOKEN
+      kv:
+        enabled: true
+        backend: secret
+        default-context: ${spring.application.name}
+        profile-separator: '/'
     consul:
       host: localhost
       port: 8500
@@ -21,7 +32,10 @@ keycloak:
   admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID}
   admin-username: ${KEYCLOAK_ADMIN_USERNAME}
   admin-password: ${KEYCLOAK_ADMIN_PASSWORD}
-
+logging:
+  level:
+    org.springframework.vault: DEBUG
+    org.springframework.cloud.vault: DEBUG
 app:
   redirect-uri: http://localhost:8080
 

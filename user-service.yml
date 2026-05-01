@@ -4,7 +4,8 @@ server:
 spring:
   application:
     name: user-service
-
+  config:
+    import: "vault://"
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -19,6 +20,15 @@ spring:
         health-check-interval: 10s
         enabled: true
         register: true
+    vault: 
+      uri: http://localhost:8200
+      token: ${VAULT_TOKEN:myroot}
+      authentication: TOKEN
+      kv:
+        enabled: true
+        backend: secret
+        default-context: ${spring.application.name}
+        profile-separator: '/'
   jpa:
     hibernate:
       ddl-auto: update
@@ -29,7 +39,10 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${KEYCLOAK_SERVER_URL}/realms/${KEYCLOAK_REALM}
-
+logging:
+  level:
+    org.springframework.vault: DEBUG
+    org.springframework.cloud.vault: DEBUG
 management:
   endpoints:
     web:
