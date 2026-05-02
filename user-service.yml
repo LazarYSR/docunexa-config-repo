@@ -5,11 +5,13 @@ spring:
   application:
     name: user-service
   config:
-    import: "vault://"
+    import:
+      - "vault://secret/data/user-service/database?prefix=database"  # ← Import explicite
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    # ✅ Mapping: Vault 'database.url' → Spring '${database.url}'
+    url: ${database.url:jdbc:postgresql://localhost:5432/docunexa-db}
+    username: ${database.username:postgres}
+    password: ${database.password:}  # ⚠️ Pas de fallback en prod !
     driver-class-name: org.postgresql.Driver
   cloud:
     consul:
@@ -20,29 +22,28 @@ spring:
         health-check-interval: 10s
         enabled: true
         register: true
-    vault: 
+    vault:
       uri: http://localhost:8201
       token: ${VAULT_TOKEN:myroot}
       authentication: TOKEN
       kv:
         enabled: true
         backend: secret
-        default-context: ${spring.application.name}
-        profile-separator: '/'
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_SERVER_URL}/realms/${KEYCLOAK_REALM}
+          issuer-uri: ${keycloak.server-url:http://localhost:9090}/realms/${keycloak.realm:docunexa}
+
 logging:
   level:
     org.springframework.vault: DEBUG
     org.springframework.cloud.vault: DEBUG
+
 management:
   endpoints:
     web:

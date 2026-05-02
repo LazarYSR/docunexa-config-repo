@@ -5,7 +5,8 @@ spring:
   application:
     name: auth-service
   config:
-    import: "vault://"
+    import:
+      - "vault://secret/data/auth-service/keycloak?prefix=keycloak"  # ← Import explicite
   cloud:
     vault:
       uri: http://localhost:8201
@@ -14,8 +15,6 @@ spring:
       kv:
         enabled: true
         backend: secret
-        default-context: ${spring.application.name}
-        profile-separator: '/'
     consul:
       host: localhost
       port: 8500
@@ -24,23 +23,28 @@ spring:
         health-check-interval: 10s
         enabled: true
         register: true
+
+# ✅ Mapping: Vault 'keycloak.*' → Spring '${keycloak.*}'
 keycloak:
-  server-url: ${KEYCLOAK_SERVER_URL}
-  realm: ${KEYCLOAK_REALM}
-  client-id: ${KEYCLOAK_CLIENT_ID}
-  client-secret: ${KEYCLOAK_CLIENT_SECRET}
-  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID}
-  admin-username: ${KEYCLOAK_ADMIN_USERNAME}
-  admin-password: ${KEYCLOAK_ADMIN_PASSWORD}
-logging:
-  level:
-    org.springframework.vault: DEBUG
-    org.springframework.cloud.vault: DEBUG
+  server-url: ${keycloak.server-url:http://localhost:9090}
+  realm: ${keycloak.realm:docunexa}
+  client-id: ${keycloak.client-id:gateway-client}
+  client-secret: ${keycloak.client-secret:}
+  admin-client-id: ${keycloak.admin-client-id:admin-cli}
+  admin-username: ${keycloak.admin-username:admin}
+  admin-password: ${keycloak.admin-password:admin}
+
 app:
   redirect-uri: http://localhost:8080
 
 user-service:
   url: http://localhost:8081
+
+logging:
+  level:
+    org.springframework.vault: DEBUG
+    org.springframework.cloud.vault: DEBUG
+
 management:
   endpoints:
     web:
