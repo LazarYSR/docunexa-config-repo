@@ -6,12 +6,11 @@ spring:
     name: user-service
   config:
     import:
-      - "vault://secret/data/user-service/database?prefix=database"  # ← Import explicite
+      - "vault://secret/data/user-service/database?prefix=database"
   datasource:
-    # ✅ Mapping: Vault 'database.url' → Spring '${database.url}'
     url: ${database.url:jdbc:postgresql://localhost:5432/docunexa-db}
     username: ${database.username:postgres}
-    password: ${database.password:}  # ⚠️ Pas de fallback en prod !
+    password: ${database.password:}
     driver-class-name: org.postgresql.Driver
   cloud:
     consul:
@@ -48,4 +47,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+      include: "*"
