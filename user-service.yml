@@ -24,7 +24,7 @@ spring:
         register: true
     vault:
       uri: http://localhost:8201
-      token: ${VAULT_TOKEN:myroot}
+      token: myroot
       authentication: TOKEN
       kv:
         enabled: true
