@@ -39,7 +39,6 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          # ✅ Mapping: Vault 'keycloak.server-url' → Spring '${keycloak.server-url}'
           issuer-uri: ${keycloak.server-url:http://localhost:9090}/realms/${keycloak.realm:docunexa}
 
 logging:
