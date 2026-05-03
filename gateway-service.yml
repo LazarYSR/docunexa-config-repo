@@ -4,17 +4,9 @@ server:
 spring:
   application:
     name: gateway-service
-  config:
-    import:
-      - "vault://secret/data/gateway-service/keycloak?prefix=keycloak"
   cloud:
-    vault:
-      uri: http://localhost:8201
-      token: myroot
-      authentication: TOKEN
-      kv:
-        enabled: true
-        backend: secret
+    config:
+      fail-fast: false
     consul:
       host: localhost
       port: 8500
@@ -23,6 +15,13 @@ spring:
         health-check-interval: 10s
         enabled: true
         register: true
+    vault:
+      uri: http://localhost:8201
+      token: myroot
+      authentication: TOKEN
+      kv:
+        enabled: true
+        backend: secret
     gateway:
       routes:
         - id: auth-service
@@ -38,11 +37,6 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${keycloak.server-url:http://localhost:9090}/realms/${keycloak.realm:docunexa}
-
-logging:
-  level:
-    org.springframework.vault: DEBUG
-    org.springframework.cloud.vault: DEBUG
 
 management:
   endpoints:
