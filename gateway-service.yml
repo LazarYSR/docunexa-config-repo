@@ -5,14 +5,8 @@ spring:
   application:
     name: gateway-service
   cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        health-check-path: /actuator/health
-        health-check-interval: 10s
-        enabled: true
-        register: true
+    config:
+      fail-fast: false
     vault:
       uri: http://localhost:8201
       token: myroot
@@ -22,8 +16,14 @@ spring:
         backend: secret
         default-context: gateway-service
         profile-separator: '/'
-    config:
-      fail-fast: false
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        enabled: true
+        register: true
     gateway:
       routes:
         - id: auth-service
