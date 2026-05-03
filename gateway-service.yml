@@ -12,9 +12,9 @@ spring:
       token: myroot
       authentication: TOKEN
       kv:
+        default-context: gateway-service
         enabled: true
         backend: secret
-        default-context: gateway-service
         profile-separator: '/'
     consul:
       host: localhost
