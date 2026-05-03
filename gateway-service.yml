@@ -8,13 +8,13 @@ spring:
     config:
       fail-fast: false
     vault:
-      uri: http://localhost:8201
+      uri: http://localhost:8201  # ← HTTP, pas HTTPS !
       token: myroot
       authentication: TOKEN
       kv:
-        default-context: gateway-service
         enabled: true
         backend: secret
+        default-context: gateway-service  # ← Chemin correct
         profile-separator: '/'
     consul:
       host: localhost
