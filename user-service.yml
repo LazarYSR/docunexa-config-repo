@@ -4,9 +4,6 @@ server:
 spring:
   application:
     name: user-service
-  config:
-    import:
-      - "vault://secret/data/user-service/database?prefix=database"
   datasource:
     url: ${database.url:jdbc:postgresql://localhost:5432/docunexa-db}
     username: ${database.username:postgres}
@@ -28,6 +25,8 @@ spring:
       kv:
         enabled: true
         backend: secret
+        default-context: user-service
+        profile-separator: '/'
   jpa:
     hibernate:
       ddl-auto: update
@@ -38,13 +37,13 @@ spring:
         jwt:
           issuer-uri: ${keycloak.server-url:http://localhost:9090}/realms/${keycloak.realm:docunexa}
 
-logging:
-  level:
-    org.springframework.vault: DEBUG
-    org.springframework.cloud.vault: DEBUG
-
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+
+logging:
+  level:
+    org.springframework.vault: DEBUG
+    org.springframework.cloud.vault: DEBUG

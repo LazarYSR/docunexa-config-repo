@@ -4,17 +4,16 @@ server:
 spring:
   application:
     name: auth-service
-  config:
-    import:
-      - "vault://secret/data/auth-service/keycloak?prefix=keycloak"  # ← Import explicite
   cloud:
     vault:
       uri: http://localhost:8201
-      token: ${VAULT_TOKEN:myroot}
+      token: myroot
       authentication: TOKEN
       kv:
         enabled: true
         backend: secret
+        default-context: auth-service
+        profile-separator: '/'
     consul:
       host: localhost
       port: 8500
@@ -24,7 +23,6 @@ spring:
         enabled: true
         register: true
 
-# ✅ Mapping: Vault 'keycloak.*' → Spring '${keycloak.*}'
 keycloak:
   server-url: ${keycloak.server-url:http://localhost:9090}
   realm: ${keycloak.realm:docunexa}
