@@ -15,6 +15,10 @@ spring:
         health-check-interval: 10s
         enabled: true
         register: true
+        # ✅ Forcer localhost au lieu du hostname auto-détecté
+        instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+        prefer-ip-address: true
+        ip-address: 127.0.0.1
     gateway:
       routes:
         - id: auth-service
@@ -29,7 +33,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${keycloak.server-url}/realms/${keycloak.realm}
+          issuer-uri: ${keycloak.server-url:http://localhost:9090}/realms/${keycloak.realm:docunexa}
 
 management:
   endpoints:

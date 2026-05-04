@@ -20,6 +20,8 @@ spring:
         health-check-interval: 10s
         enabled: true
         register: true
+        prefer-ip-address: true
+        ip-address: 127.0.0.1
   jpa:
     hibernate:
       ddl-auto: update
