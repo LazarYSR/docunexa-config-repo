@@ -18,7 +18,6 @@ spring:
         prefer-ip-address: true
         ip-address: 127.0.0.1
   keycloak:
-    # ✅ Mapping correct: Vault 'keycloak.server-url' → Spring '${keycloak.server-url}'
     server-url: ${keycloak.server-url:http://localhost:9090}
     realm: ${keycloak.realm:docunexa}
     client-id: ${keycloak.client-id:gateway-client}
