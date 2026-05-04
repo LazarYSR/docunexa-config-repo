@@ -15,10 +15,10 @@ spring:
         health-check-interval: 10s
         enabled: true
         register: true
-        # ✅ Forcer localhost
         prefer-ip-address: true
         ip-address: 127.0.0.1
   keycloak:
+    # ✅ Mapping correct: Vault 'keycloak.server-url' → Spring '${keycloak.server-url}'
     server-url: ${keycloak.server-url:http://localhost:9090}
     realm: ${keycloak.realm:docunexa}
     client-id: ${keycloak.client-id:gateway-client}
@@ -31,21 +31,26 @@ spring:
   user-service:
     url: http://localhost:8081
   mail:
-    host: ${smtp.host}
-    port: ${smtp.port}
-    username: ${smtp.user}
-    password: ${smtp.password}
+    host: ${smtp.host:smtp.gmail.com}
+    port: ${smtp.port:587}
+    username: ${smtp.user:ddigimor@gmail.com}
+    password: ${smtp.password:}
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
-          from: ${smtp.from}
-          from-display-name: ${smtp.from-display-name}
+          from: ${smtp.from:ddigimor@gmail.com}
+          from-display-name: ${smtp.from-display-name:Docunexa}
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+
+logging:
+  level:
+    org.springframework.vault: DEBUG
+    org.springframework.cloud.vault: DEBUG
