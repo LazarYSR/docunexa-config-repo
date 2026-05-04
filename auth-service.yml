@@ -21,7 +21,7 @@ spring:
     server-url: ${keycloak.server-url:http://localhost:9090}
     realm: ${keycloak.realm:docunexa}
     client-id: ${keycloak.client-id:gateway-client}
-    client-secret: ${keycloak.client-secret:}
+    client-secret: ${keycloak.client-secret}
     admin-client-id: ${keycloak.admin-client-id:admin-cli}
     admin-username: ${keycloak.admin-username:admin}
     admin-password: ${keycloak.admin-password:admin}
