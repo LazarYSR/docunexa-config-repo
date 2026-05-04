@@ -1,6 +1,5 @@
 server:
   port: 8080
-  address: 127.0.0.1
 
 spring:
   application:
@@ -12,16 +11,20 @@ spring:
       host: localhost
       port: 8500
       discovery:
+        # Health check
         health-check-path: /actuator/health
         health-check-interval: 15s
-        health-check-timeout: 10s     
+        health-check-timeout: 10s
+        health-check-critical-timeout: 1m
+        
+        # Registration
         enabled: true
         register: true
-        instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
         prefer-ip-address: true
-        hostname: localhost
-        prefer-ip-address: false
-        port: ${server.port:8080}
+        ip-address: 127.0.0.1
+        port: 8080  
+        instance-id: ${spring.application.name}:${server.port}
+        
     gateway:
       routes:
         - id: auth-service
