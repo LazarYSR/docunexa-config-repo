@@ -5,15 +5,8 @@ spring:
   application:
     name: auth-service
   cloud:
-    vault:
-      uri: http://localhost:8201
-      token: myroot
-      authentication: TOKEN
-      kv:
-        enabled: true
-        backend: secret
-        default-context: auth-service
-        profile-separator: '/'
+    config:
+      fail-fast: false
     consul:
       host: localhost
       port: 8500
@@ -22,26 +15,18 @@ spring:
         health-check-interval: 10s
         enabled: true
         register: true
-
-keycloak:
-  server-url: ${keycloak.server-url:http://localhost:9090}
-  realm: ${keycloak.realm:docunexa}
-  client-id: ${keycloak.client-id:gateway-client}
-  client-secret: ${keycloak.client-secret:}
-  admin-client-id: ${keycloak.admin-client-id:admin-cli}
-  admin-username: ${keycloak.admin-username:admin}
-  admin-password: ${keycloak.admin-password:admin}
-
-app:
-  redirect-uri: http://localhost:8080
-
-user-service:
-  url: http://localhost:8081
-
-logging:
-  level:
-    org.springframework.vault: DEBUG
-    org.springframework.cloud.vault: DEBUG
+  keycloak:
+    server-url: ${keycloak.server-url:http://localhost:9090}
+    realm: ${keycloak.realm:docunexa}
+    client-id: ${keycloak.client-id:gateway-client}
+    client-secret: ${keycloak.client-secret:}
+    admin-client-id: ${keycloak.admin-client-id:admin-cli}
+    admin-username: ${keycloak.admin-username:admin}
+    admin-password: ${keycloak.admin-password:admin}
+  app:
+    redirect-uri: http://localhost:8080
+  user-service:
+    url: http://localhost:8081
 
 management:
   endpoints:
