@@ -13,12 +13,13 @@ spring:
       discovery:
         health-check-path: /actuator/health
         health-check-interval: 10s
+        health-check-timeout: 5s     
         enabled: true
         register: true
-        # ✅ Forcer localhost au lieu du hostname auto-détecté
         instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
         prefer-ip-address: true
         ip-address: 127.0.0.1
+        port: ${server.port:8080}
     gateway:
       routes:
         - id: auth-service
