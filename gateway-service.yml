@@ -29,7 +29,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${keycloak.server-url:http://localhost:9090}/realms/${keycloak.realm:docunexa}
+          issuer-uri: ${keycloak.server-url}/realms/${keycloak.realm}
 
 management:
   endpoints:
