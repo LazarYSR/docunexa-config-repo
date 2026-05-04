@@ -16,17 +16,30 @@ spring:
         enabled: true
         register: true
   keycloak:
-    server-url: ${keycloak.server-url:http://localhost:9090}
-    realm: ${keycloak.realm:docunexa}
-    client-id: ${keycloak.client-id:gateway-client}
-    client-secret: ${keycloak.client-secret:}
-    admin-client-id: ${keycloak.admin-client-id:admin-cli}
-    admin-username: ${keycloak.admin-username:admin}
-    admin-password: ${keycloak.admin-password:admin}
+    server-url: ${keycloak.server-url}
+    realm: ${keycloak.realm}
+    client-id: ${keycloak.client-id}
+    client-secret: ${keycloak.client-secret}
+    admin-client-id: ${keycloak.admin-client-id}
+    admin-username: ${keycloak.admin-username}
+    admin-password: ${keycloak.admin-password}
   app:
     redirect-uri: http://localhost:8080
   user-service:
     url: http://localhost:8081
+  mail:
+    host: ${smtp.host}
+    port: ${smtp.port}
+    username: ${smtp.user}
+    password: ${smtp.password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          from: ${smtp.from}
+          from-display-name: ${smtp.from-display-name}
 
 management:
   endpoints:
