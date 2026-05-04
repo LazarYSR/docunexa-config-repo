@@ -7,15 +7,6 @@ spring:
   cloud:
     config:
       fail-fast: false
-    vault:
-      uri: http://localhost:8201
-      token: myroot
-      authentication: TOKEN
-      kv:
-        enabled: true
-        backend: secret
-        default-context: gateway-service
-        profile-separator: '/'
     consul:
       host: localhost
       port: 8500
@@ -45,8 +36,3 @@ management:
     web:
       exposure:
         include: "*"
-
-logging:
-  level:
-    org.springframework.vault: DEBUG
-    org.springframework.cloud.vault: DEBUG
