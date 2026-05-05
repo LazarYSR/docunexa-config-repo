@@ -15,9 +15,9 @@ spring:
         register: true
         
   datasource:
-    url: ${database.url:jdbc:postgresql://localhost:5432/docunexa-db}
-    username: ${database.username:postgres}
-    password: ${database.password:}
+    url: ${database.url}
+    username: ${database.username}
+    password: ${database.password}
     driver-class-name: org.postgresql.Driver
     
   jpa:
@@ -29,7 +29,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${keycloak.server-url:http://localhost:9090}/realms/${keycloak.realm:docunexa}
+          issuer-uri: ${keycloak.server-url}/realms/${keycloak.realm}
 
 management:
   endpoints:
