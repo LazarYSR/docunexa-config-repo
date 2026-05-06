@@ -30,7 +30,23 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${keycloak.server-url}/realms/${keycloak.realm}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${spring.application.name}
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.docunexa.events
+    listener:
+      ack-mode: manual_immediate
+      concurrency: 3
 
+kafka:
+  topic:
+    user-events: user-events
 management:
   endpoints:
     web:

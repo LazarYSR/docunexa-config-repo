@@ -25,6 +25,20 @@ spring:
     redirect-uri: http://localhost:8080
   user-service:
     url: http://localhost:8081
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+      properties:
+        enable.idempotence: true
+        transactional.id: ${spring.application.name}-tx
+
+kafka:
+  topic:
+    user-events: user-events
 
 management:
   endpoints:
