@@ -40,9 +40,14 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: com.docunexa.events
+        session.timeout.ms: 30000
+        heartbeat.interval.ms: 10000
+        max.poll.interval.ms: 300000
+        max.poll.records: 10
     listener:
       ack-mode: manual_immediate
       concurrency: 3
+      missing-topics-fatal: false
 
 kafka:
   topic:

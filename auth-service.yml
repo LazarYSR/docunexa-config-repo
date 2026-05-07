@@ -22,7 +22,7 @@ spring:
     admin-username: ${keycloak.admin-username}
     admin-password: ${keycloak.admin-password}
   app:
-    redirect-uri: http://localhost:8080
+    redirect-uri: ${app.redirect-uri}
   user-service:
     url: http://localhost:8081
   kafka:
