@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: user-service
+  main:
+    allow-bean-definition-overriding: true  
   cloud:
     config:
       fail-fast: false
@@ -13,7 +15,24 @@ spring:
         health-check-interval: 15s
         enabled: true
         register: true
-        
+    stream:
+      kafka:
+        binder:
+          brokers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+          default-key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          default-value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+          auto-create-topics: true
+      bindings:
+        userEvents-in-0:
+          destination: user-events
+          group: user-service-group
+          content-type: application/json
+          consumer:
+            max-attempts: 3
+            back-off-initial-interval: 1000
+            back-off-multiplier: 2.0
+            back-off-max-interval: 10000
+
   datasource:
     url: ${database.url}
     username: ${database.username}
@@ -30,28 +49,11 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${keycloak.server-url}/realms/${keycloak.realm}
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
-    consumer:
-      group-id: ${spring.application.name}
-      auto-offset-reset: earliest
-      enable-auto-commit: false
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: com.docunexa.events
-        session.timeout.ms: 30000
-        heartbeat.interval.ms: 10000
-        max.poll.interval.ms: 300000
-        max.poll.records: 10
-    listener:
-      ack-mode: manual_immediate
-      concurrency: 3
-      missing-topics-fatal: false
 
 kafka:
   topic:
     user-events: user-events
+
 management:
   endpoints:
     web:

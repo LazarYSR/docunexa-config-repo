@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: auth-service
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     config:
       fail-fast: false
@@ -13,6 +15,21 @@ spring:
         health-check-interval: 15s
         enabled: true
         register: true
+    stream:
+      kafka:
+        binder:
+          brokers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+          default-key-serializer: org.apache.kafka.common.serialization.StringSerializer
+          default-value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+          auto-create-topics: true
+      bindings:
+        userEvents-out-0:
+          destination: user-events
+          content-type: application/json
+          producer:
+            partition-key-expression: payload.aggregateId
+            required-groups: user-service
+
   keycloak:
     server-url: ${keycloak.server-url}
     realm: ${keycloak.realm}
@@ -25,16 +42,6 @@ spring:
     redirect-uri: ${app.redirect-uri}
   user-service:
     url: http://localhost:8081
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      acks: all
-      retries: 3
-      properties:
-        enable.idempotence: true
-        transactional.id: ${spring.application.name}-tx
 
 kafka:
   topic:
