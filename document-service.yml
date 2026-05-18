@@ -1,2 +1,41 @@
 server:
   port: 8083
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/docunexa_document_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    health:
+      show-details: always
+
+  health:
+    rabbit:
+      enabled: false
+
+file:
+  upload-dir: uploads
