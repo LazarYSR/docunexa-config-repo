@@ -19,8 +19,8 @@ kafka:
   topic-ocr-processing: ocr.processing
 
 ocr:
-  primary-engine: paddleocr
-  fallback-engine: tesseract
+  primary-engine: tesseract
+  fallback-engine: paddleocr
   confidence-threshold: 0.65
   fallback-min-confidence: 0.70
   fallback-min-improvement: 0.15
