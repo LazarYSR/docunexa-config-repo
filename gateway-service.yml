@@ -14,6 +14,10 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/users/**
+        - id: ocr-service
+          uri: lb://ocr-service
+          predicates:
+            - Path=/api/ocr/**
   security:
     oauth2:
       resourceserver:
