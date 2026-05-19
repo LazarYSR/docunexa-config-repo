@@ -27,6 +27,16 @@ spring:
     vault:
       enabled: false
 
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+
+      bindings:
+        documentEvents-out-0:
+          destination: document-events
+          content-type: application/json
+
 management:
   endpoints:
     web:
