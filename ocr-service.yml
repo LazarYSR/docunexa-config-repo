@@ -1,0 +1,91 @@
+app:
+  name: DocuNexa OCR Service
+  env: local
+  host: 0.0.0.0
+  port: 8083
+  debug: true
+
+minio:
+  secure: false
+  default-bucket: documents
+
+redis:
+  db: 0
+  ttl-seconds: 86400
+
+kafka:
+  topic-ocr-completed: ocr.completed
+  topic-ocr-failed: ocr.failed
+  topic-ocr-processing: ocr.processing
+
+ocr:
+  primary-engine: paddleocr
+  fallback-engine: tesseract
+  confidence-threshold: 0.65
+  fallback-min-confidence: 0.70
+  fallback-min-improvement: 0.15
+  min-block-confidence: 0.50
+  numeric-min-confidence: 0.30
+  min-text-length: 30
+  languages:
+    - fr
+    - ar
+    - en
+    - es
+  structured-fast-path-enabled: true
+  structured-fast-path-min-dates: 6
+  orientation-retry-enabled: true
+
+paddleocr:
+  use-gpu: false
+  use-textline-orientation: false
+  use-doc-orientation-classify: false
+  use-doc-unwarping: false
+  text-detection-model-name: PP-OCRv5_mobile_det
+  text-recognition-model-name: latin_PP-OCRv5_mobile_rec
+  text-det-limit-side-len: 1280
+
+trocr:
+  enabled: true
+  model-name: microsoft/trocr-base-handwritten
+  latin-model-name: microsoft/trocr-base-handwritten
+  arabic-enabled: false
+  arabic-model-name: ""
+  device: auto
+  max-regions: 20
+  min-crop-width: 40
+  min-crop-height: 15
+  use-as-fallback: true
+
+yolo:
+  enabled: false
+  model-path: models/document_yolo/best.pt
+  conf-threshold: 0.35
+  iou-threshold: 0.45
+  device: auto
+  max-detections: 50
+
+tesseract:
+  cmd: C:\Program Files\Tesseract-OCR\tesseract.exe
+
+metrics:
+  enabled: true
+
+consul:
+  enabled: true
+  host: localhost
+  port: 8500
+
+service:
+  name: ocr-service
+  id: ocr-service-1
+  host: localhost
+  port: 8083
+  health-path: /actuator/health
+  health-url: http://host.docker.internal:8083/actuator/health
+
+vault:
+  enabled: true
+  addr: http://localhost:8201
+  kv-mount: secret
+  secret-path: ocr-service
