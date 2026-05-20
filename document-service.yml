@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/docunexa_document_db
-    username: postgres
-    password: postgres
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -25,7 +25,14 @@ spring:
 
   cloud:
     vault:
-      enabled: false
+      enabled: true
+      uri: http://localhost:8201
+      token: myroot
+      authentication: TOKEN
+      kv:
+        enabled: true
+        backend: secret
+        default-context: document-service
 
     stream:
       kafka:
