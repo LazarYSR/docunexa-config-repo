@@ -4,13 +4,9 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/docunexa_document_db
-<<<<<<< HEAD
     username: ${db.username}
     password: ${db.password}
-=======
-    username: postgres
-    password: 123456
->>>>>>> 6363418 (fix :port document to 8084)
+
     driver-class-name: org.postgresql.Driver
 
   jpa:
