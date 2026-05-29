@@ -19,7 +19,7 @@ spring:
           predicates:
             - Path=/api/ocr/**
         - id: document-service
-          uri: lb://document-service
+          uri: http://localhost:8084
           predicates:
             - Path=/documents/**
   security:
