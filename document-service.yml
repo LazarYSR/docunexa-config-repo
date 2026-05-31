@@ -64,7 +64,8 @@ management:
 
 file:
   upload-dir: uploads
-  storage:
+
+storage:
   type: minio
 
 minio:
