@@ -1,0 +1,53 @@
+app:
+  name: extraction-service
+  env: local
+  host: 0.0.0.0
+  port: 8085
+  log-level: INFO
+
+database:
+  url: postgresql+psycopg2://postgres:postgres@localhost:5432/docunexa_extraction_db
+
+kafka:
+  enabled: true
+  bootstrap-servers: localhost:9092
+  consumer-group: extraction-service-group
+  ocr-completed-topic: ocr.completed
+  extraction-completed-topic: extraction.completed
+  extraction-failed-topic: extraction.failed
+
+security:
+  enabled: false
+  keycloak:
+    issuer-uri: http://localhost:9090/realms/docunexa
+    audience: account
+    allowed-roles:
+      - ADMIN
+      - USER
+
+redis:
+  enabled: false
+  host: localhost
+  port: 6379
+  db: 0
+
+consul:
+  enabled: true
+  host: localhost
+  port: 8500
+
+service:
+  name: extraction-service
+  id: extraction-service-1
+  host: localhost
+  port: 8085
+  health-path: /health
+  ready-path: /ready
+  metrics-path: /metrics
+  health-url: http://host.docker.internal:8085/health
+
+vault:
+  enabled: true
+  addr: http://localhost:8201
+  kv-mount: secret
+  secret-path: extraction-service

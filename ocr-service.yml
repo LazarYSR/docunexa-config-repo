@@ -6,6 +6,9 @@ app:
   debug: true
 
 minio:
+  endpoint: localhost:9000
+  access-key: ${minio.access-key}
+  secret-key: ${minio.secret-key}
   secure: false
   default-bucket: documents
 
@@ -14,9 +17,14 @@ redis:
   ttl-seconds: 86400
 
 kafka:
+  bootstrap-servers: localhost:9092
   topic-ocr-completed: ocr.completed
   topic-ocr-failed: ocr.failed
   topic-ocr-processing: ocr.processing
+  topic-document-events: document-events
+  consumer:
+    group: ocr-service-group
+    enabled: true
 
 ocr:
   primary-engine: tesseract
