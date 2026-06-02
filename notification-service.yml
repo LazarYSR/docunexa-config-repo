@@ -24,11 +24,19 @@ spring:
     consul:
       host: localhost
       port: 8500
+      scheme: http
+
       discovery:
         enabled: true
         register: true
+
         health-check-path: /actuator/health
         health-check-interval: 15s
+        health-check-timeout: 10s
+        health-check-critical-timeout: 1m
+
+        health-check-url: http://host.docker.internal:8086/actuator/health
+
         instance-id: ${spring.application.name}:${server.port}
         prefer-ip-address: true
         ip-address: 127.0.0.1
