@@ -1,0 +1,87 @@
+server:
+  port: 8086
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/docunexa_notification_db
+    username: ${db.username}
+    password: ${db.password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  cloud:
+    config:
+      enabled: true
+      fail-fast: false
+
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+        instance-id: ${spring.application.name}:${server.port}
+        prefer-ip-address: true
+        ip-address: 127.0.0.1
+        port: ${server.port}
+
+    vault:
+      enabled: true
+      uri: http://localhost:8201
+      token: myroot
+      authentication: TOKEN
+      kv:
+        enabled: true
+        backend: secret
+        default-context: notification-service
+
+    function:
+      definition: extractionCompletedEvents;extractionFailedEvents;ocrFailedEvents
+
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+
+      bindings:
+        extractionCompletedEvents-in-0:
+          destination: extraction.completed
+          group: notification-service-group
+          content-type: application/json
+
+        extractionFailedEvents-in-0:
+          destination: extraction.failed
+          group: notification-service-group
+          content-type: application/json
+
+        ocrFailedEvents-in-0:
+          destination: ocr.failed
+          group: notification-service-group
+          content-type: application/json
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    health:
+      show-details: always
+
+  health:
+    vault:
+      enabled: false
+
+notification:
+  security:
+    enabled: false

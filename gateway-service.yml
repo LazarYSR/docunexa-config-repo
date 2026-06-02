@@ -22,6 +22,10 @@ spring:
           uri: http://localhost:8084
           predicates:
             - Path=/documents/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/notifications/**
   security:
     oauth2:
       resourceserver:
